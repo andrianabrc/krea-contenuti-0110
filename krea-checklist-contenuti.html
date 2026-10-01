@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>KREA · Check-list contenuti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --porcelain:#FAF8F4;
+    --surface:#FFFFFF;
+    --ink:#1B1A18;
+    --muted:#8B857A;
+    --hair:#EBE6DC;
+    --gold:#C0912F;
+    --gold-soft:#E9CE86;
+    --glow:rgba(201,153,60,.45);
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--porcelain);
+    color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:64px;
+  }
+  .wrap{max-width:540px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- Header ---------- */
+  header{padding:38px 0 20px;}
+  .eyebrow{
+    font-size:12px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--muted);font-weight:500;
+  }
+  .brand{
+    font-family:"Inter";font-weight:600;
+    letter-spacing:.42em;font-size:22px;text-transform:uppercase;
+    margin:2px 0 22px;padding-left:.42em;
+  }
+  h1{
+    font-family:"Fraunces",serif;font-weight:500;
+    font-size:34px;line-height:1.08;margin:0 0 10px;letter-spacing:-.01em;
+  }
+  .edition{
+    display:inline-block;font-size:12.5px;letter-spacing:.04em;
+    color:var(--gold);border:1px solid var(--gold-soft);
+    border-radius:100px;padding:5px 13px;font-weight:500;
+  }
+  .date{color:var(--muted);font-size:14px;margin-top:14px;}
+
+  /* ---------- Progress (signature: la barra si "illumina") ---------- */
+  .progress-shell{
+    position:sticky;top:0;z-index:20;
+    background:linear-gradient(var(--porcelain) 72%,transparent);
+    padding:14px 0 16px;margin-top:6px;
+  }
+  .progress-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;}
+  .progress-label{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+  .progress-count{font-family:"Fraunces",serif;font-size:17px;color:var(--ink);}
+  .track{height:8px;border-radius:100px;background:var(--hair);overflow:hidden;}
+  .fill{
+    height:100%;width:0%;border-radius:100px;
+    background:linear-gradient(90deg,var(--gold-soft),var(--gold));
+    box-shadow:0 0 0 var(--glow);
+    transition:width .55s cubic-bezier(.22,.61,.36,1),box-shadow .55s ease;
+  }
+  .fill.lit{box-shadow:0 0 16px var(--glow);}
+
+  /* ---------- Sections ---------- */
+  section{
+    background:var(--surface);border:1px solid var(--hair);border-radius:18px;
+    padding:22px 20px 8px;margin:16px 0;
+  }
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;}
+  .sec-num{font-family:"Fraunces",serif;font-size:15px;color:var(--gold);width:26px;flex:none;}
+  h2{font-family:"Fraunces",serif;font-weight:500;font-size:23px;line-height:1.15;margin:0;}
+  .sec-sub{color:var(--muted);font-size:13.5px;margin:6px 0 4px 38px;padding-bottom:6px;}
+
+  .group-title{
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+    font-weight:600;margin:20px 0 2px 38px;
+  }
+  .group-note{color:var(--muted);font-size:13px;margin:2px 0 6px 38px;font-style:italic;}
+  .group-note a{word-break:break-all;}
+  .flag{
+    display:inline-block;font-style:normal;font-weight:600;color:var(--gold);
+    background:#F7F2E8;border-radius:5px;padding:1px 7px;font-size:12px;letter-spacing:.02em;
+  }
+
+  /* ---------- Checklist items ---------- */
+  .item{display:flex;gap:13px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--hair);cursor:pointer;}
+  .item:first-of-type{border-top:none;}
+  .box{
+    flex:none;width:24px;height:24px;border-radius:7px;border:1.6px solid #CFC8BB;
+    background:#fff;margin-top:1px;position:relative;transition:.18s;
+  }
+  .item input{position:absolute;opacity:0;pointer-events:none;}
+  .item input:checked + .box{background:var(--gold);border-color:var(--gold);}
+  .box:after{
+    content:"";position:absolute;left:8px;top:4px;width:5px;height:10px;
+    border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) scale(0);
+    transition:.18s;transition-delay:.03s;
+  }
+  .item input:checked + .box:after{transform:rotate(45deg) scale(1);}
+  .txt{font-size:15px;line-height:1.45;padding-top:1px;}
+  .item input:checked ~ .txt{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--hair);}
+  .txt b{font-weight:600;}
+  .shot{color:var(--gold);font-weight:600;}
+
+  /* ---------- Table (calendario) ---------- */
+  table{width:100%;border-collapse:collapse;margin:6px 0 14px;}
+  th,td{text-align:left;padding:11px 4px;border-bottom:1px solid var(--hair);font-size:15px;}
+  th{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+  td.h{font-family:"Fraunces",serif;color:var(--gold);font-size:17px;white-space:nowrap;}
+  tr:last-child td{border-bottom:none;}
+  .total-row td{border-top:2px solid var(--ink);font-weight:600;}
+
+  footer{text-align:center;color:var(--muted);font-size:12.5px;margin:26px 0 0;padding-bottom:20px;}
+  .reset{
+    display:block;margin:22px auto 0;background:none;border:1px solid var(--hair);
+    color:var(--muted);font-family:inherit;font-size:13px;border-radius:100px;
+    padding:9px 18px;cursor:pointer;
+  }
+  .reset:active{background:var(--hair);}
+
+  a{color:var(--gold);}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">Krea</div>
+    <h1>Check-list<br>contenuti</h1>
+    <div style="margin-top:14px"><span class="edition">✦ Edizione ottobre</span></div>
+  </header>
+
+  <div class="progress-shell">
+    <div class="progress-meta">
+      <span class="progress-label">Avanzamento</span>
+      <span class="progress-count"><span id="done">0</span> / <span id="tot">0</span></span>
+    </div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+  </div>
+
+  <!-- 01 IMPOSTAZIONI IPHONE -->
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>Impostazioni iPhone</h2></div>
+    <p class="sec-sub">Da controllare una volta sola, prima di iniziare.</p>
+
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Pulisci l'obiettivo posteriore con un panno morbido</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Imposta il video su <b>4K a 30 fps</b> <span class="path">Impostazioni › Fotocamera › Registra video</span></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Attiva la <b>Griglia</b> per tenere le inquadrature dritte <span class="path">Impostazioni › Fotocamera › Griglia</span></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Attiva <b>Mantieni impostazioni</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Gira in <b>verticale (9:16)</b>, salvo dove è indicato <b>orizzontale</b> nei contenuti</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Attiva <b>Non disturbare</b> in modo da non ricevere notifiche o chiamate durante le riprese</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Luminosità dello schermo al massimo per giudicare bene l'inquadratura</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Puoi fare <b>zoom x2</b> se la luminosità dell'ambiente lo permette. Se vedi che la qualità del video non è il massimo, riprendi in <b>1x</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Blocca fuoco ed esposizione: tieni premuto sul punto finché appare <b>AE/AF Lock</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Tieni il telefono con <b>due mani</b> o appoggiato per evitare clip mosse, e non fare movimenti bruschi</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Ogni inquadratura deve durare <b>almeno 7–10 sec</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">La luce deve essere davanti al soggetto, <b>mai controluce</b> (attenzione alle finestre alle spalle)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><b>Attenzione allo sfarfallio (flickering):</b> se nel video vedi delle bande o uno sfarfallio della luce (capita con i LED e i neon del salone), cambia le impostazioni video su <b>4K a 25 fps</b> <span class="path">Impostazioni › Fotocamera › Registra video</span> — con la corrente europea lo sfarfallio sparisce. Se persiste, spegni la luce che dà problemi e sfrutta la luce naturale, oppure spostati di postazione.</span></label>
+  </section>
+
+  <!-- 02 CONTENUTI -->
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>Contenuti da girare</h2></div>
+    <p class="sec-sub">Gran parte dei contenuti Light Up si possono riprendere durante la stessa lavorazione: alcuni video possono essere della stessa cliente.</p>
+
+    <!-- GHD -->
+    <div class="group-title">✦ Piastra GHD</div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Video della <b>scatola</b> (confezione) in primo piano, sfondo pulito</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">La piastra <b>fuori dalla scatola</b>, inquadratura che fa vedere bene anche le <b>lamette</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">La piastra <b>in uso</b> con il risultato a <b>boccoli</b>, ripresa ravvicinata che segue la ciocca</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Se riuscite, anche il <b>risultato liscio</b>, magari su una ciocca</span></label>
+
+    <!-- Consulenza Vale + Ivana -->
+    <div class="group-title">✦ Vale e Ivana che si consultano</div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Vale e Ivana che <b>si consultano</b> tra loro, in modo naturale</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Mentre <b>preparano qualcosa</b> insieme: il colore, gli strumenti</span></label>
+
+    <!-- Light Up completo verticale -->
+    <div class="group-title">✦ Light Up — servizio completo</div>
+    <div class="group-note">La lavorazione raccontata per intero, verticale.</div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Processo di <b>consulenza</b> con la cliente — <b>con audio</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><b>Preparazione del materiale</b> e sistemazione della cliente</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Fasi del processo: <b>schiariture e tonalizzazione</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><b>Trattamenti e piega</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Video del <b>dopo</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><b>Foto</b> del risultato <b>da tutti i lati</b></span></label>
+
+    <!-- Light Up orizzontale -->
+    <div class="group-title">✦ Light Up — versione orizzontale</div>
+    <div class="group-note"><span class="flag">↔ Gira in ORIZZONTALE</span> — stessa lavorazione, formato diverso.</div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">Prima</span> — la cliente prima del Light Up</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">Processo</span> — il percorso di schiaritura</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">Dopo</span> — il risultato finale</span></label>
+
+    <!-- Light Up percorso a fasi verticale -->
+    <div class="group-title">✦ Light Up — percorso a fasi (verticale)</div>
+    <div class="group-note">Riprendi ogni fase pensando al montaggio a step. Riferimento stile ed effetti: <a href="https://www.instagram.com/reels/DdHwdybt8eB/">instagram.com/reels/DdHwdybt8eB</a></div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">1</span> — Il prima</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">2</span> — Gli strumenti</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">3</span> — Il percorso di schiaritura</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">4</span> — I trattamenti</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">5</span> — La piega</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">6</span> — Il risultato</span></label>
+
+    <!-- Artista e la tela -->
+    <div class="group-title">✦ “L'artista e la tela”</div>
+    <div class="group-note">Concept: l'artista trasforma una “tela”. Riferimento stile: <a href="https://www.instagram.com/reels/DZflWotNu9o/">instagram.com/reels/DZflWotNu9o</a></div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">1</span> — L'<b>artista</b> (Ivana o Valentina)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">2</span> — I capelli <b>da dietro</b> del prima, come “la tela”</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">3</span> — Gli <b>strumenti</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">4</span> — Il <b>processo</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">5</span> — Il <b>capolavoro</b> (risultato finale)</span></label>
+
+    <!-- Cheratina -->
+    <div class="group-title">✦ Trattamento alla cheratina</div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">Prima</span> — i capelli prima del trattamento</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">Processo</span> — le varie fasi</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt"><span class="shot">Dopo</span> — il risultato</span></label>
+  </section>
+
+  <!-- 03 INVIO -->
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>Invio via Telegram</h2></div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Invia i video <b>come “File”</b> (graffetta › File), non come video normale: così non vengono compressi e resta il 4K</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Manda tutte le clip grezze, <b>senza montarle</b></span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Raggruppa per contenuto e scrivi due parole in didascalia (es. “GHD”, “Light Up a fasi”, “Cheratina”, “Artista e tela”)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">Invia tutto <b>lo stesso giorno</b> delle riprese</span></label>
+  </section>
+
+  <button class="reset" id="reset">Azzera le spunte</button>
+  <footer>KREA · Documento a cura di AB Digital Marketing Studio · Nuova edizione ogni venerdì</footer>
+
+</div>
+
+<script>
+(function(){
+  var boxes=[].slice.call(document.querySelectorAll('.item input'));
+  var fill=document.getElementById('fill');
+  var done=document.getElementById('done');
+  var tot=document.getElementById('tot');
+  var KEY='krea-checklist-ottobre';
+  tot.textContent=boxes.length;
+
+  function save(){
+    try{localStorage.setItem(KEY,JSON.stringify(boxes.map(function(b){return b.checked;})));}catch(e){}
+  }
+  function load(){
+    try{
+      var s=JSON.parse(localStorage.getItem(KEY)||'[]');
+      boxes.forEach(function(b,i){if(s[i])b.checked=true;});
+    }catch(e){}
+  }
+  function render(){
+    var n=boxes.filter(function(b){return b.checked;}).length;
+    done.textContent=n;
+    var pct=boxes.length?Math.round(n/boxes.length*100):0;
+    fill.style.width=pct+'%';
+    fill.classList.toggle('lit',pct>0);
+  }
+  load();render();
+  boxes.forEach(function(b){b.addEventListener('change',function(){render();save();});});
+  document.getElementById('reset').addEventListener('click',function(){
+    boxes.forEach(function(b){b.checked=false;});render();save();
+  });
+})();
+</script>
+</body>
+</html>
